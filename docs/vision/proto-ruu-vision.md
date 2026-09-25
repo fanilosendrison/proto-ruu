@@ -38,6 +38,11 @@ version-control progression. proto-ruu deliberately reproduces only a bounded
 form of the Ruu user experience and does not inherit Ruu's global work
 discovery, ownership inference, or unrelated-work reconciliation.
 
+General concurrent convergence remains outside that boundary: when concurrent
+change to a Git reality required by an invocation invalidates its progression,
+proto-ruu blocks safely and returns control to the caller rather than
+reconciling the contributions itself.
+
 These relationships are directional context, not permission to import
 proto-Go, Ruu, or git-commits-push architecture into proto-ruu.
 

@@ -17,14 +17,20 @@ publication is part of the invocation contract.
 proto-ruu acts only within the supplied WorkBoundary. It does not discover,
 claim, or govern unrelated work outside it.
 
+Several proto-ruu invocations may progress concurrently. If the Git reality an
+invocation depends on changes incompatibly while it progresses — for example
+because another contribution advanced the same remote — proto-ruu does not
+merge, rebase, reconcile, force-push, or otherwise absorb that concurrency. It
+stops safely and returns a blocked result to the caller, who owns how its
+objective continues.
+
 The repository is currently in the product-definition phase.
 
 Its authoritative starting point is:
 
 - [`docs/specification/proto-ruu-spec.md`](docs/specification/proto-ruu-spec.md) — normative
   product meaning;
-- [`docs/adr/`](docs/adr/) — accepted decision history once product decisions
-  are recorded;
+- [`docs/adr/`](docs/adr/) — accepted decision history;
 - [`docs/vision/proto-ruu-vision.md`](docs/vision/proto-ruu-vision.md) — non-normative
   motivation and direction;
 - [`docs/repository-governance/`](docs/repository-governance/) — repository
