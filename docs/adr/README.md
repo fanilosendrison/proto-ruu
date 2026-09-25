@@ -15,6 +15,8 @@ Accepted ADRs are:
   not resolve concurrency between contributions.
 - [ADR-002](adr-002-coordination-mechanism-undecided.md) — the concurrency
   coordination mechanism remains undecided; amends ADR-001.
+- [ADR-003](adr-003-direct-push-publication-envelope.md) — the validity
+  envelope is bounded to direct-push publication; confirms ADR-001.
 
 Do not create an ADR merely because an implementation choice is convenient.
 
