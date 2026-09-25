@@ -9,7 +9,10 @@ The normative Product Intent currently lives in:
 ../specification/proto-ruu-spec.md
 ```
 
-No numbered ADR exists yet.
+The first accepted ADR is:
+
+- [ADR-001](adr-001-concurrency-does-not-imply-convergence.md) — proto-Ruu does
+  not resolve concurrency between contributions.
 
 Do not create an ADR merely because an implementation choice is convenient.
 
