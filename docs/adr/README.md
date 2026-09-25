@@ -20,6 +20,9 @@ Accepted ADRs are:
 - [ADR-004](adr-004-transitional-target-stack.md) — the transitional target
   stack is Turnlock, Go, and Ruu; proto-Go is an intended present first-class
   caller; amends ADR-003.
+- [ADR-005](adr-005-original-wording-correction.md) — ADR-003's immutable body
+  retains the original wording; ADR-004 carries the correction; amends
+  ADR-004.
 
 Do not create an ADR merely because an implementation choice is convenient.
 
