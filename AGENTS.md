@@ -169,7 +169,8 @@ proto-ruu/
 └── docs/
     ├── adr/
     │   ├── README.md
-    │   └── index.md
+    │   ├── index.md
+    │   └── adr-001-concurrency-does-not-imply-convergence.md
     ├── repository-governance/
     │   ├── proto-ruu-discovery-classification.md
     │   └── proto-ruu-engineering.md
