@@ -176,7 +176,8 @@ proto-ruu/
     │   ├── adr-001-concurrency-does-not-imply-convergence.md
     │   ├── adr-002-coordination-mechanism-undecided.md
     │   ├── adr-003-direct-push-publication-envelope.md
-    │   └── adr-004-transitional-target-stack.md
+    │   ├── adr-004-transitional-target-stack.md
+    │   └── adr-005-original-wording-correction.md
     ├── repository-governance/
     │   ├── proto-ruu-discovery-classification.md
     │   └── proto-ruu-engineering.md
