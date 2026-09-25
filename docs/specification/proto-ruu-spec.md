@@ -467,7 +467,82 @@ native Git state/history
 authorized publication when applicable
 ```
 
-## 0.13 proto-Ruu is deliberately not Ruu
+## 0.13 Concurrent progression may block; proto-Ruu does not converge
+
+A proto-Ruu invocation progresses the WorkBoundary it was supplied. Several
+proto-Ruu invocations may therefore exist and progress at the same time.
+
+Independent WorkBoundaries do not require global serialization merely because
+they coexist. The product property is not:
+
+```text
+only one proto-Ruu invocation may exist at a time
+```
+
+but:
+
+```text
+independent proto-Ruu invocations may progress concurrently
+
+if one invocation's required Git preconditions are invalidated by another:
+    block safely
+    return control to the caller
+```
+
+An invocation acts only under the authority and Git assumptions applicable to
+its own WorkBoundary. It must not widen that authority because other
+contributions, workspaces, invocations, or Git realities are discoverable.
+
+If, during progression, a Git reality required by the operation changes in a
+way that makes the requested effect no longer demonstrably safe under the
+authority the invocation holds — for example because another contribution has
+advanced the same remote destination — proto-Ruu MUST NOT:
+
+- merge;
+- rebase;
+- resolve conflicts;
+- force-push;
+- adopt another contribution;
+- otherwise absorb the concurrency;
+- perform general convergence.
+
+It MUST stop that progression safely and return to the caller a result
+indicating that progression is blocked by the observed concurrent Git reality.
+
+That blocked outcome is an observable truth of the invocation, not a failure
+proto-Ruu is responsible for repairing.
+
+proto-Ruu MAY detect concurrent change. Detecting concurrent change MUST NOT
+become general convergence ownership.
+
+What happens after the block belongs to the caller / Development System. A
+proto-Go caller may, for example, preserve the same ManagedContribution
+objective, retire prior readiness authority if authored mutation must resume,
+request authored correction or convergence, revalidate affected work, establish
+a later readiness occurrence, and invoke proto-Ruu again. proto-Ruu MUST NOT
+know or own that caller-side continuation logic.
+
+The exact blocked-result shape, API enum or schema, locking mechanism,
+compare-and-swap versus lease or another Git protocol, lock granularity, retry
+strategy, Git precondition representation, collision-detection algorithm, and
+persistence model remain undecided.
+
+This is an explicit difference between proto-Ruu and Ruu:
+
+```text
+proto-Ruu
+= safe Git progression of supplied work
+= concurrency encountered during that progression may block it
+
+Ruu
+= broader convergence system
+= may mechanically reconcile concurrent managed work
+```
+
+proto-Ruu only detects concurrency encountered during safe progression of the
+work it was given, and blocks instead of absorbing it.
+
+## 0.14 proto-Ruu is deliberately not Ruu
 
 proto-Ruu aims to reproduce a bounded form of the Ruu user experience:
 
@@ -520,7 +595,7 @@ The architectural boundary is therefore:
                         Git
 ```
 
-## 0.14 Governing product test
+## 0.15 Governing product test
 
 When evaluating a future invariant, architecture, implementation mechanism, or
 migration from git-commits-push, the primary product question is:
