@@ -17,6 +17,9 @@ Accepted ADRs are:
   coordination mechanism remains undecided; amends ADR-001.
 - [ADR-003](adr-003-direct-push-publication-envelope.md) — the validity
   envelope is bounded to direct-push publication; confirms ADR-001.
+- [ADR-004](adr-004-transitional-target-stack.md) — the transitional target
+  stack is Turnlock, Go, and Ruu; proto-Go is an intended present first-class
+  caller; amends ADR-003.
 
 Do not create an ADR merely because an implementation choice is convenient.
 
