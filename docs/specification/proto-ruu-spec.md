@@ -37,8 +37,8 @@ proto-Ruu does not replace Git with another version-control system.
 
 What proto-Ruu removes from the ordinary user workflow is the need to manually
 decide and execute routine operations required to turn identified working state
-into the appropriate durable Git state and, when required by the invocation,
-publish that state through Git.
+into the appropriate durable Git representation and to complete its direct-push
+publication.
 
 The ordinary experience should therefore approach:
 
@@ -86,14 +86,14 @@ authorized and expected to version.
 
 Given such a boundary, the governing promise is:
 
-> **When work is presented to proto-Ruu within an identifiable WorkBoundary,
-> proto-Ruu owns the routine Git versioning progression required to durably
-> represent that work and advance it across the authorized Git boundary,
-> including publication when publication is part of the invocation contract.
-> The user or calling system does not need to manually perform or reconstruct
-> the corresponding staging, commit, history, or publication operations.
-> proto-Ruu acts only within the supplied WorkBoundary and does not discover,
-> claim, or govern unrelated work outside it.**
+> **When work is presented to proto-Ruu within an identifiable WorkBoundary
+> inside the direct-push validity envelope, proto-Ruu owns the routine Git
+> versioning progression required to durably represent that work in native Git
+> and to complete its direct-push publication. The user or calling system does
+> not need to manually perform or reconstruct the corresponding staging,
+> commit, history, or publication operations. proto-Ruu acts only within the
+> supplied WorkBoundary and does not discover, claim, or govern unrelated work
+> outside it.**
 
 This is the defining reduction relative to Ruu.
 
@@ -110,7 +110,9 @@ WorkBoundary
      ↓
  proto-Ruu
      ↓
-durable / advanced Git state
+durable native Git representation
+     ↓
+completed direct-push publication
 ```
 
 not:
@@ -123,7 +125,62 @@ proto-Ruu discovers all relevant work
 proto-Ruu globally coordinates everything
 ```
 
-## 0.3 WorkBoundary is authority, not global discovery
+## 0.3 Validity envelope: direct-push publication
+
+proto-Ruu is deliberately bounded to work whose publication can be realized by
+direct Git push.
+
+Inside that domain, the normal expected outcome of an invocation is:
+
+```text
+the supplied work is durably represented in native Git
+AND
+the required direct-push publication has been completed
+```
+
+Direct push is not one option inside a general family of publication routes; it
+is the only publication realization proto-Ruu supports in this generation.
+
+Work whose correct progression requires another publication mechanism is
+outside the current proto-Ruu product domain, including:
+
+- pull requests;
+- merge queues;
+- stacked pull requests;
+- provider-specific publication workflows;
+- review-gated publication;
+- general convergence;
+- publication topology selection;
+- multiple publication route families.
+
+proto-Ruu MUST NOT respond to such work by inventing an unsupported publication
+mechanism, a generic publication abstraction, or a route engine. The case is
+out of scope, not partially supported.
+
+Conceptually, a presented case falls into one of three semantic classes:
+
+```text
+SUCCESS
+    the work is inside the supported domain, and its durable Git
+    representation and direct-push publication are complete
+
+BLOCKED
+    the work is inside the supported domain, but this invocation can no longer
+    progress safely under the authority and Git preconditions it holds
+
+OUT OF SCOPE
+    the required publication does not belong to proto-Ruu's validity envelope
+```
+
+These classes are conceptual. Enum names, exit codes, APIs, result schemas,
+implementation-level error taxonomy, and CLI wording are not decided.
+
+The exact direct-push mechanics remain undecided. Remote naming, branch or ref
+inference, the exact push protocol, force-with-lease or compare-and-swap
+mechanisms, credential handling, retry representation, and output schema are
+not selected here.
+
+## 0.4 WorkBoundary is authority, not global discovery
 
 The WorkBoundary is the semantic limit of an invocation.
 
@@ -162,7 +219,7 @@ present.
 
 proto-Ruu is responsible for respecting it.
 
-## 0.4 proto-Go is a first-class WorkBoundary provider
+## 0.5 proto-Go is a first-class WorkBoundary provider
 
 proto-Go is an intended first-class caller of proto-Ruu.
 
@@ -207,7 +264,12 @@ higher-level proto-Go outcome.
 proto-Ruu realizes Git effects inside the supplied boundary; it does not redefine
 proto-Go's lifecycle.
 
-## 0.5 proto-Ruu must also be usable without proto-Go
+proto-Ruu completes the direct-push publication it has been authorized to
+perform and returns the observable Git outcome. The caller decides whether its
+own higher-level publication obligation is satisfied; proto-Ruu does not know
+or own that obligation.
+
+## 0.6 proto-Ruu must also be usable without proto-Go
 
 proto-Ruu is not merely an internal proto-Go implementation component.
 
@@ -222,7 +284,8 @@ user is already working in a coding-agent session
   → user invokes /ruu
   → the invocation adapter establishes the strongest WorkBoundary it can
     authoritatively identify
-  → proto-Ruu versions that boundary
+  → proto-Ruu completes the versioning and direct-push publication of that
+    boundary
 ```
 
 The ordinary standalone experience MUST NOT require the user to construct an
@@ -247,7 +310,7 @@ proto-Ruu MUST NOT fabricate provenance it does not possess.
 A standalone invocation may therefore have a less precise WorkBoundary than a
 proto-Go invocation while using the same proto-Ruu core semantics.
 
-## 0.6 A dedicated Git worktree is not a proto-Ruu prerequisite
+## 0.7 A dedicated Git worktree is not a proto-Ruu prerequisite
 
 proto-Go may choose to provide dedicated temporary Git worktrees because its own
 managed-authoring semantics require them.
@@ -279,7 +342,7 @@ workspace may participate when it can be identified and safely operated on.
 proto-Ruu MUST NOT require that the work was originally produced under
 proto-Go.
 
-## 0.7 Work ownership is supplied, not inferred globally
+## 0.8 Work ownership is supplied, not inferred globally
 
 proto-Ruu is deliberately not responsible for reconstructing causal authorship
 from arbitrary ambient filesystem state.
@@ -317,7 +380,7 @@ A standalone invocation may provide only the current workspace.
 Future harness integrations may provide richer session-scoped evidence without
 changing proto-Ruu's core responsibility.
 
-## 0.8 proto-Ruu owns versioning, not semantic validation
+## 0.9 proto-Ruu owns versioning, not semantic validation
 
 proto-Ruu exists to make versioning disappear, not to become the authority on
 whether authored work is good, complete, reviewed, tested, or semantically
@@ -351,7 +414,7 @@ merely because git-commits-push previously contained those mechanisms.
 Each such capability must be justified independently by proto-Ruu's own product
 contract or by explicitly supplied external policy.
 
-## 0.9 Commit structure and Git mechanics are implementation responsibilities, not user workflow
+## 0.10 Commit structure and Git mechanics are implementation responsibilities, not user workflow
 
 The user should not ordinarily need to decide the mechanical representation of
 the versioning progression.
@@ -379,11 +442,16 @@ In particular, this document does not establish:
 * one commit per invocation;
 * LLM-generated commit messages;
 * a particular branching model;
-* a particular remote name;
-* direct push versus pull request;
+* the remote name used for direct-push publication;
+* the branch or ref inference used to select the direct-push destination;
+* the exact direct-push protocol;
+* a force-with-lease, compare-and-swap, or equivalent mechanism;
+* a credential mechanism;
+* the representation of retries;
 * a specific orchestration runtime;
 * a SQLite reconciler;
-* a particular retry or persistence mechanism.
+* a particular persistence mechanism;
+* an output or result schema.
 
 Those are downstream decisions.
 
@@ -391,7 +459,7 @@ The governing criterion is whether the resulting behavior preserves the
 user-facing promise that routine Git versioning has ceased to be the user's
 responsibility.
 
-## 0.10 Existing Git state is part of the problem, not necessarily an error
+## 0.11 Existing Git state is part of the problem, not necessarily an error
 
 The supplied WorkBoundary may contain different legitimate Git states.
 
@@ -401,14 +469,15 @@ For example, work may be:
 dirty and not yet committed
 already committed but not yet published
 partially versioned
-clean because the required Git state already exists
+already published
 ```
 
 proto-Ruu must reason from actual Git state rather than assuming that every
-invocation begins with a dirty working tree requiring a fresh commit.
+invocation begins with a dirty working tree requiring a fresh commit and push.
 
-The product outcome is successful versioning progression, not unconditional
-execution of a fixed sequence of Git commands.
+The product outcome is successful completion of the durable Git representation
+and its direct-push publication, not unconditional execution of a fixed
+sequence of Git commands.
 
 Therefore:
 
@@ -421,7 +490,7 @@ always git add → git commit → git push
 A conforming implementation must recognize when an effect already exists and
 must not recreate it merely to satisfy a procedural script.
 
-## 0.11 Retries must not turn invisible versioning into duplicate versioning
+## 0.12 Retries must not turn invisible versioning into duplicate versioning
 
 The ordinary user experience assumes that invoking proto-Ruu, retrying after an
 interruption, or being retried by a calling workflow does not require the user
@@ -444,7 +513,7 @@ It does establish the product requirement that crash/retry handling must not
 depend on blindly replaying mutating Git operations and hoping they remain
 harmless.
 
-## 0.12 Native Git remains the observable substrate
+## 0.13 Native Git remains the observable substrate
 
 proto-Ruu's effects must remain represented as ordinary Git state.
 
@@ -464,10 +533,10 @@ proto-Ruu versioning semantics
     ↓
 native Git state/history
     ↓
-authorized publication when applicable
+direct-push publication
 ```
 
-## 0.13 Concurrent progression may block; proto-Ruu does not converge
+## 0.14 Concurrent progression may block; proto-Ruu does not converge
 
 A proto-Ruu invocation progresses the WorkBoundary it was supplied. Several
 proto-Ruu invocations may therefore exist and progress at the same time.
@@ -542,19 +611,50 @@ Ruu
 proto-Ruu only detects concurrency encountered during safe progression of the
 work it was given, and blocks instead of absorbing it.
 
-## 0.14 proto-Ruu is deliberately not Ruu
+The direct-push validity envelope does not relax this rule. Force-pushing,
+merging, rebasing, or converging to make publication succeed is not permitted.
 
-proto-Ruu aims to reproduce a bounded form of the Ruu user experience:
+## 0.15 proto-Ruu is a bounded transitional system, not an incremental Ruu
+
+proto-Ruu aims to provide a bounded form of the Ruu user experience:
 
 > **the user should not have to think about version control.**
 
-It deliberately does not yet reproduce Ruu's complete coordination model.
+proto-Ruu is a transitional component. It exists to provide the needed bounded
+Git experience while the broader systems that will carry richer publication
+and convergence responsibilities — Turnlock, proto-Go, and Ruu — are not yet
+the available path.
+
+The relationship is not:
+
+```text
+proto-Ruu → progressively grows into Ruu
+```
+
+but:
+
+```text
+proto-Ruu
+= temporary bounded solution
+= supplied work
+= direct-push publication
+= concurrency may block
+= no convergence ownership
+
+Ruu
+= durable target system
+= broader agentic version control
+= concurrent convergence
+= richer publication and provider realization
+= broader managed-state model
+```
 
 Ruu's stronger product problem includes discovering and re-observing durable
 managed state, coordinating concurrent sessions and repositories, reconciling
 stale lineages, maintaining managed authoring topology, handling global
-convergence obligations, and progressing a distributed version-control system
-without relying on a caller to supply the complete work boundary.
+convergence obligations, richer publication realization, and progressing a
+distributed version-control system without relying on a caller to supply the
+complete work boundary.
 
 proto-Ruu instead assumes:
 
@@ -565,16 +665,18 @@ someone can tell me which work I own for this invocation
 and promises:
 
 ```text
-once you tell me that, I make its routine Git versioning your problem no longer
+once you tell me that, I make its routine Git versioning and direct-push
+publication your problem no longer
 ```
 
-This distinction is intentional.
+proto-Ruu's simplicity is intentional. It MUST NOT grow global work discovery,
+global work ownership inference, unrelated-work reconciliation, general
+publication route families, or provider realization merely to approximate Ruu
+incrementally, and it MUST NOT import an abstraction that belongs to the future
+Ruu in order to prepare a migration.
 
-proto-Ruu MUST NOT grow global work discovery, global work ownership inference,
-or unrelated-work reconciliation merely to approximate Ruu incrementally.
-
-If such capabilities become required, they belong to Ruu or require an explicit
-change to proto-Ruu's Product Intent.
+If such capabilities become required, they belong to a broader system or
+require an explicit change to proto-Ruu's Product Intent.
 
 The architectural boundary is therefore:
 
@@ -595,14 +697,15 @@ The architectural boundary is therefore:
                         Git
 ```
 
-## 0.15 Governing product test
+## 0.16 Governing product test
 
 When evaluating a future invariant, architecture, implementation mechanism, or
 migration from git-commits-push, the primary product question is:
 
-> **Given work whose boundary has already been established, can the user or
-> caller hand that work to proto-Ruu and stop thinking about its routine Git
-> versioning?**
+> **Given work whose boundary has already been established inside the
+> direct-push validity envelope, can the user or caller hand that work to
+> proto-Ruu and stop thinking about its routine Git versioning and direct-push
+> publication?**
 
 A mechanism that improves implementation convenience but forces the user back
 into routine staging, commit management, publication recovery, or Git
