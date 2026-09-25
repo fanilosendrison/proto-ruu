@@ -10,9 +10,18 @@ have to perform or reason about routine Git versioning operations for work whose
 boundary can already be identified.
 
 When work is presented within an identifiable WorkBoundary, proto-ruu owns the
-routine Git versioning progression required to durably represent that work and
-advance it across the authorized Git boundary, including publication when
-publication is part of the invocation contract.
+routine Git versioning progression required to durably represent that work in
+native Git and to complete its direct-push publication.
+
+proto-ruu is deliberately bounded to publication that can be realized by a
+direct Git push. Publication routes such as pull requests, merge queues,
+stacked pull requests, provider-specific workflows, review-gated publication,
+or general convergence are outside its current product domain; proto-ruu does
+not invent a generic publication abstraction for them.
+
+proto-ruu is a transitional component: it provides that bounded experience
+while broader systems carrying richer publication and convergence
+responsibilities are not yet available.
 
 proto-ruu acts only within the supplied WorkBoundary. It does not discover,
 claim, or govern unrelated work outside it.

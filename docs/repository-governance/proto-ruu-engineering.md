@@ -34,12 +34,14 @@ The repository is currently in:
 PRODUCT DEFINITION
 ```
 
-The only currently authorized substantive product artifact is the accepted
-Product Intent in:
+The current normative product meaning is the accepted Product Intent in:
 
 ```text
 docs/specification/proto-ruu-spec.md
 ```
+
+Accepted ADRs under `docs/adr/` record explicit decision history and
+amendments.
 
 No complete invariant set exists yet.
 

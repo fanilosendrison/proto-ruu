@@ -26,7 +26,10 @@ docs/specification/proto-ruu-spec.md
 
 proto-ruu operates on a supplied WorkBoundary.
 
-It versions the work contained by that boundary.
+It durably represents the work contained by that boundary in native Git and
+completes its direct-push publication. Publication routes requiring pull
+requests, merge queues, provider-specific workflows, or general convergence
+are outside its product domain.
 
 It must not widen that authority merely because other repositories, linked
 worktrees, checkouts, branches, sessions, or dirty working trees are
@@ -171,7 +174,8 @@ proto-ruu/
     │   ├── README.md
     │   ├── index.md
     │   ├── adr-001-concurrency-does-not-imply-convergence.md
-    │   └── adr-002-coordination-mechanism-undecided.md
+    │   ├── adr-002-coordination-mechanism-undecided.md
+    │   └── adr-003-direct-push-publication-envelope.md
     ├── repository-governance/
     │   ├── proto-ruu-discovery-classification.md
     │   └── proto-ruu-engineering.md
