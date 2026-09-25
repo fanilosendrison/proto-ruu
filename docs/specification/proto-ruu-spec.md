@@ -621,9 +621,13 @@ proto-Ruu aims to provide a bounded form of the Ruu user experience:
 > **the user should not have to think about version control.**
 
 proto-Ruu is a transitional component. It exists to provide the needed bounded
-Git experience while the broader systems that will carry richer publication
-and convergence responsibilities — Turnlock, proto-Go, and Ruu — are not yet
-the available path.
+Git experience while the future target stack that will carry richer publication
+and convergence responsibilities — Turnlock, Go, and Ruu — is not yet
+available.
+
+proto-Go is not one of the systems whose absence justifies proto-Ruu. proto-Go
+is an intended present first-class caller of proto-Ruu and one of the systems
+that consumes proto-Ruu now (section 0.5).
 
 The relationship is not:
 
