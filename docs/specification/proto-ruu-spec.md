@@ -310,34 +310,52 @@ proto-Ruu MUST NOT fabricate provenance it does not possess.
 A standalone invocation may therefore have a less precise WorkBoundary than a
 proto-Go invocation while using the same proto-Ruu core semantics.
 
-## 0.7 A dedicated Git worktree is not a proto-Ruu prerequisite
+## 0.7 proto-Ruu is independent of the caller's managed-authoring mechanism
 
-proto-Go may choose to provide dedicated temporary Git worktrees because its own
-managed-authoring semantics require them.
+proto-Ruu's product contract does not depend on the concrete mechanism by
+which a caller creates, isolates, persists, replaces, or rematerializes the
+environment in which authored work was produced.
 
-That does not make dedicated linked worktrees a proto-Ruu product requirement.
+For proto-Go, the current managed-authoring contract is expressed through
+Managed Authoring Environment guarantees rather than through the selection of
+a Git worktree or another concrete environment mechanism. That caller-side
+contract does not become a proto-Ruu mechanism requirement.
 
-proto-Ruu must be able to operate on an ordinary Git checkout when that checkout
-is the supplied WorkBoundary.
+proto-Ruu receives an applicable WorkBoundary and Git authority. Its product
+requirement is that the work presented through that boundary is sufficiently
+identifiable and accessible as Git state for proto-Ruu to perform its bounded
+routine versioning and direct-push publication responsibilities.
 
-Therefore the product distinction is not:
-
-```text
-worktree
-vs
-no worktree
-```
-
-but:
+Therefore:
 
 ```text
-identifiable authorized Git workspace
-vs
-no sufficiently identifiable work boundary
+caller authoring environment
+!=
+WorkBoundary
 ```
 
-A normal primary checkout, a linked worktree, or another conforming Git
-workspace may participate when it can be identified and safely operated on.
+and:
+
+```text
+caller authoring mechanism
+!=
+proto-Ruu prerequisite
+```
+
+A Git worktree, ordinary checkout, clone, VM-backed workspace, container-backed
+workspace, rematerialized workspace, or another caller-owned realization may
+contain work eventually presented to proto-Ruu. None of those realizations is
+selected by proto-Ruu Product Intent.
+
+The existence or visibility of additional repositories, checkouts, mutable
+state, or resources inside the caller's environment does not add them to the
+WorkBoundary.
+
+proto-Ruu MUST NOT infer work ownership from the extent of the caller's
+environment.
+
+A standalone invocation may still operate on an ordinary Git checkout when that
+checkout is the supplied WorkBoundary.
 
 proto-Ruu MUST NOT require that the work was originally produced under
 proto-Go.

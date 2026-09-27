@@ -39,7 +39,10 @@ The standalone `/ruu` invocation is an intended ordinary coding-agent
 experience and may supply only the best WorkBoundary available from its session
 and Git context.
 
-A dedicated Git worktree is not a proto-ruu prerequisite.
+proto-ruu does not depend on the concrete managed-authoring mechanism used by
+its caller. A worktree, VM, container, clone, or other caller-owned environment
+may contain work later presented through a WorkBoundary, but none of those
+mechanisms is proto-ruu Product Intent.
 
 Ruu is the durable target system for broader agentic version control,
 including concurrent convergence, richer publication and provider

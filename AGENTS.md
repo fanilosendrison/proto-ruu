@@ -38,6 +38,11 @@ discoverable on the same machine.
 The caller is responsible for supplying the work boundary it is authorized to
 present. proto-ruu is responsible for respecting it.
 
+Do not make proto-ruu depend on the caller's concrete managed-authoring
+mechanism. A VM, container, Git worktree, clone, filesystem arrangement, or
+other caller-owned environment is not the WorkBoundary merely because it
+contains the supplied work.
+
 Do not add invariants, canonical terms, architecture, or product semantics
 beyond the accepted Product Intent without explicit semantic authority.
 
@@ -177,7 +182,8 @@ proto-ruu/
     │   ├── adr-002-coordination-mechanism-undecided.md
     │   ├── adr-003-direct-push-publication-envelope.md
     │   ├── adr-004-transitional-target-stack.md
-    │   └── adr-005-original-wording-correction.md
+    │   ├── adr-005-original-wording-correction.md
+    │   └── adr-006-caller-authoring-mechanism-independence.md
     ├── repository-governance/
     │   ├── proto-ruu-discovery-classification.md
     │   └── proto-ruu-engineering.md
