@@ -23,6 +23,8 @@ Accepted ADRs are:
 - [ADR-005](adr-005-original-wording-correction.md) — ADR-003's immutable body
   retains the original wording; ADR-004 carries the correction; amends
   ADR-004.
+- [ADR-006](adr-006-caller-authoring-mechanism-independence.md) — proto-Ruu is
+  independent of the caller's concrete managed-authoring mechanism.
 
 Do not create an ADR merely because an implementation choice is convenient.
 

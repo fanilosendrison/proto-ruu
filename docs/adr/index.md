@@ -7,6 +7,7 @@
 | [ADR-003](adr-003-direct-push-publication-envelope.md) | proto-Ruu's validity envelope is bounded to direct-push publication (confirms ADR-001) | accepted |
 | [ADR-004](adr-004-transitional-target-stack.md) | The transitional target stack is Turnlock, Go, and Ruu; proto-Go is an intended present first-class caller (amends ADR-003) | accepted |
 | [ADR-005](adr-005-original-wording-correction.md) | ADR-003's immutable body retains the original wording; ADR-004 carries the correction (amends ADR-004) | accepted |
+| [ADR-006](adr-006-caller-authoring-mechanism-independence.md) | proto-Ruu is independent of the caller's concrete managed-authoring mechanism | accepted |
 
 The current normative starting authority is
 [`../specification/proto-ruu-spec.md`](../specification/proto-ruu-spec.md).
