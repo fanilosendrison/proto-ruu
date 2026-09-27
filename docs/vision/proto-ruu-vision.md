@@ -44,6 +44,12 @@ its caller. A worktree, VM, container, clone, or other caller-owned environment
 may contain work later presented through a WorkBoundary, but none of those
 mechanisms is proto-ruu Product Intent.
 
+The supplied WorkBoundary identifies the work proto-ruu takes responsibility
+for, not a physical read sandbox. proto-ruu may observe additional Git reality
+when that observation is necessary to progress the supplied work safely, while
+never treating observation as ownership, WorkBoundary expansion, or mutation
+authority.
+
 Ruu is the durable target system for broader agentic version control,
 including concurrent convergence, richer publication and provider
 realization, and a broader managed-state model. proto-ruu is not an

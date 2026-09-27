@@ -30,6 +30,11 @@ The concrete authoring environment used by a caller is not part of the
 proto-ruu contract: the caller supplies the applicable WorkBoundary and Git
 authority, and environment visibility does not widen that boundary.
 
+The WorkBoundary is not a read sandbox. proto-ruu may observe Git facts outside
+it when those facts are necessary to determine the state, safety, or
+satisfaction of the authorized progression, but observation never expands work
+ownership or mutation authority.
+
 Several proto-ruu invocations may progress concurrently. If the Git reality an
 invocation depends on changes incompatibly while it progresses — for example
 because another contribution advanced the same remote — proto-ruu does not

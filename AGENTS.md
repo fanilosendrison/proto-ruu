@@ -43,6 +43,12 @@ mechanism. A VM, container, Git worktree, clone, filesystem arrangement, or
 other caller-owned environment is not the WorkBoundary merely because it
 contains the supplied work.
 
+Do not interpret the WorkBoundary as a maximum readable universe. proto-ruu may
+observe Git reality outside it only when that observation is necessary to
+determine the state, safety, or satisfaction of the authorized progression of
+the supplied work. Observation does not establish ownership, WorkBoundary
+membership, or mutation authority, and must not become ambient work discovery.
+
 Do not add invariants, canonical terms, architecture, or product semantics
 beyond the accepted Product Intent without explicit semantic authority.
 
@@ -183,7 +189,8 @@ proto-ruu/
     │   ├── adr-003-direct-push-publication-envelope.md
     │   ├── adr-004-transitional-target-stack.md
     │   ├── adr-005-original-wording-correction.md
-    │   └── adr-006-caller-authoring-mechanism-independence.md
+    │   ├── adr-006-caller-authoring-mechanism-independence.md
+    │   └── adr-007-observation-scope-is-necessity-driven.md
     ├── repository-governance/
     │   ├── proto-ruu-discovery-classification.md
     │   └── proto-ruu-engineering.md
