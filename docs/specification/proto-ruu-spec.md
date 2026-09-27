@@ -184,6 +184,10 @@ not selected here.
 
 The WorkBoundary is the semantic limit of an invocation.
 
+It limits the work proto-Ruu takes responsibility for; it is not a claim that
+proto-Ruu can never observe a Git fact outside that work boundary. Such
+observation is governed by section 0.8.
+
 It may identify work in one Git workspace or in several Git workspaces across
 one or more repositories.
 
@@ -360,7 +364,60 @@ checkout is the supplied WorkBoundary.
 proto-Ruu MUST NOT require that the work was originally produced under
 proto-Go.
 
-## 0.8 Work ownership is supplied, not inferred globally
+## 0.8 Observation scope is necessity-driven, not ambient discovery
+
+The WorkBoundary is the semantic boundary of work proto-Ruu is responsible for.
+It is not necessarily the maximum universe of Git reality that proto-Ruu may
+need to observe.
+
+proto-Ruu may observe Git reality outside the supplied WorkBoundary only when
+that observation is necessary to determine:
+
+- the current Git state of the supplied work;
+- the safety of an authorized version-control progression; or
+- whether the authorized progression or Git effect is already satisfied.
+
+The Observation Scope is therefore necessity-driven. It is not defined as a
+fixed closed list of refs, objects, worktrees, remotes, commands, or other Git
+entities.
+
+Observation does not expand authority.
+
+In particular:
+
+```text
+observation != ownership
+observation != WorkBoundary membership
+observation != mutation authority
+```
+
+The existence, visibility, or observation of another repository, checkout,
+worktree, ref, commit, remote state, modification, contribution, or other Git
+reality does not by itself authorize proto-Ruu to adopt, version, publish,
+reconcile, or mutate it.
+
+proto-Ruu MUST NOT use observation as an open-ended discovery mechanism for
+finding additional work to take responsibility for.
+
+The governing observation question is:
+
+"What Git reality do I need to know to determine or safely realize the
+authorized progression of this supplied work?"
+
+not:
+
+"What other work can I discover and take responsibility for?"
+
+A concrete Git operation may expose information broader than the semantic fact
+being established. The availability of that additional information does not
+widen the WorkBoundary, establish ownership, or grant mutation authority.
+
+The concrete observations required by each progression case, the Git commands
+used to obtain them, remote-fetch behavior, ref enumeration, worktree
+enumeration, object traversal, caching, persistence, and observation
+implementation architecture remain undecided.
+
+## 0.9 Work ownership is supplied, not inferred globally
 
 proto-Ruu is deliberately not responsible for reconstructing causal authorship
 from arbitrary ambient filesystem state.
@@ -398,7 +455,7 @@ A standalone invocation may provide only the current workspace.
 Future harness integrations may provide richer session-scoped evidence without
 changing proto-Ruu's core responsibility.
 
-## 0.9 proto-Ruu owns versioning, not semantic validation
+## 0.10 proto-Ruu owns versioning, not semantic validation
 
 proto-Ruu exists to make versioning disappear, not to become the authority on
 whether authored work is good, complete, reviewed, tested, or semantically
@@ -432,7 +489,7 @@ merely because git-commits-push previously contained those mechanisms.
 Each such capability must be justified independently by proto-Ruu's own product
 contract or by explicitly supplied external policy.
 
-## 0.10 Commit structure and Git mechanics are implementation responsibilities, not user workflow
+## 0.11 Commit structure and Git mechanics are implementation responsibilities, not user workflow
 
 The user should not ordinarily need to decide the mechanical representation of
 the versioning progression.
@@ -477,7 +534,7 @@ The governing criterion is whether the resulting behavior preserves the
 user-facing promise that routine Git versioning has ceased to be the user's
 responsibility.
 
-## 0.11 Existing Git state is part of the problem, not necessarily an error
+## 0.12 Existing Git state is part of the problem, not necessarily an error
 
 The supplied WorkBoundary may contain different legitimate Git states.
 
@@ -508,7 +565,7 @@ always git add → git commit → git push
 A conforming implementation must recognize when an effect already exists and
 must not recreate it merely to satisfy a procedural script.
 
-## 0.12 Retries must not turn invisible versioning into duplicate versioning
+## 0.13 Retries must not turn invisible versioning into duplicate versioning
 
 The ordinary user experience assumes that invoking proto-Ruu, retrying after an
 interruption, or being retried by a calling workflow does not require the user
@@ -531,7 +588,7 @@ It does establish the product requirement that crash/retry handling must not
 depend on blindly replaying mutating Git operations and hoping they remain
 harmless.
 
-## 0.13 Native Git remains the observable substrate
+## 0.14 Native Git remains the observable substrate
 
 proto-Ruu's effects must remain represented as ordinary Git state.
 
@@ -554,7 +611,7 @@ native Git state/history
 direct-push publication
 ```
 
-## 0.14 Concurrent progression may block; proto-Ruu does not converge
+## 0.15 Concurrent progression may block; proto-Ruu does not converge
 
 A proto-Ruu invocation progresses the WorkBoundary it was supplied. Several
 proto-Ruu invocations may therefore exist and progress at the same time.
@@ -632,7 +689,7 @@ work it was given, and blocks instead of absorbing it.
 The direct-push validity envelope does not relax this rule. Force-pushing,
 merging, rebasing, or converging to make publication succeed is not permitted.
 
-## 0.15 proto-Ruu is a bounded transitional system, not an incremental Ruu
+## 0.16 proto-Ruu is a bounded transitional system, not an incremental Ruu
 
 proto-Ruu aims to provide a bounded form of the Ruu user experience:
 
@@ -719,7 +776,7 @@ The architectural boundary is therefore:
                         Git
 ```
 
-## 0.16 Governing product test
+## 0.17 Governing product test
 
 When evaluating a future invariant, architecture, implementation mechanism, or
 migration from git-commits-push, the primary product question is:
