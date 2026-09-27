@@ -8,6 +8,7 @@
 | [ADR-004](adr-004-transitional-target-stack.md) | The transitional target stack is Turnlock, Go, and Ruu; proto-Go is an intended present first-class caller (amends ADR-003) | accepted |
 | [ADR-005](adr-005-original-wording-correction.md) | ADR-003's immutable body retains the original wording; ADR-004 carries the correction (amends ADR-004) | accepted |
 | [ADR-006](adr-006-caller-authoring-mechanism-independence.md) | proto-Ruu is independent of the caller's concrete managed-authoring mechanism | accepted |
+| [ADR-007](adr-007-observation-scope-is-necessity-driven.md) | proto-Ruu observation scope is necessity-driven and does not expand authority (clarifies ADR-006) | accepted |
 
 The current normative starting authority is
 [`../specification/proto-ruu-spec.md`](../specification/proto-ruu-spec.md).

@@ -25,6 +25,9 @@ Accepted ADRs are:
   ADR-004.
 - [ADR-006](adr-006-caller-authoring-mechanism-independence.md) — proto-Ruu is
   independent of the caller's concrete managed-authoring mechanism.
+- [ADR-007](adr-007-observation-scope-is-necessity-driven.md) — proto-Ruu
+  observation scope is necessity-driven and does not expand authority; clarifies
+  ADR-006.
 
 Do not create an ADR merely because an implementation choice is convenient.
 
